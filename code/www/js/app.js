@@ -35,14 +35,29 @@ angular.module('songhop', ['ionic', 'songhop.controllers'])
     url: '/tab',
     abstract: true,
     templateUrl: 'templates/tabs.html',
-    controller: 'TabsCtrl'
+    controller: 'TabsCtrl',
+    resolve: {
+      populateSession: function(User) {
+        return User.checkSession();
+      }
+    },
+    onEnter: function($state, User) {
+      User.checkSession().then(function(hasSession) {
+        if (hasSession) { $state.go('splash'); }
+      });
+    }
   })
 
   // Each tab has its own nav history stack:
   .state('splash', {
     url: '/',
     templateUrl: 'templates/splash.html',
-    controller: 'SplashCtrl'
+    controller: 'SplashCtrl',
+    onEnter: function($state, User) {
+      User.checkSession().then(function(hasSession) {
+        if (hasSession) $state.go('tab.discover');
+      });
+    }
   })
 
   .state('tab.discover', {
@@ -63,7 +78,7 @@ angular.module('songhop', ['ionic', 'songhop.controllers'])
           controller: 'FavoritesCtrl'
         }
       }
-    })
+    });
   // If none of the above states are matched, use this as the fallback:
   $urlRouterProvider.otherwise('/');
 
