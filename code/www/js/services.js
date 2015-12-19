@@ -28,7 +28,6 @@ angular.module('songhop.services', ['ionic.utils'])
 
   o.auth = function(username, signingUp) {
     var authroute;
-    debugger;
     if(signingUp){
       authroute = 'signup';
     } else {
@@ -37,6 +36,7 @@ angular.module('songhop.services', ['ionic.utils'])
 
     return $http.post(SERVER.url + "/" + authroute, {username: username})
       .success(function(data) {
+
         o.setSession(data.username, data.session_id, data.favorites);
       });
   };

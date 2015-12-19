@@ -43,7 +43,8 @@ angular.module('songhop', ['ionic', 'songhop.controllers'])
     },
     onEnter: function($state, User) {
       User.checkSession().then(function(hasSession) {
-        if (hasSession) { $state.go('splash'); }
+        console.log("hasSession is" + hasSession);
+        if (!hasSession) { $state.go('splash'); }
       });
     }
   })

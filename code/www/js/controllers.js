@@ -97,7 +97,7 @@ Controller for the favorites page
 /*
 Controller for our tab bar
 */
-.controller('TabsCtrl', function($scope, User, Recommendations) {
+.controller('TabsCtrl', function($scope, $window, User, Recommendations) {
   $scope.favCount = User.favoriteCount;
   $scope.logout = function() {
     User.destroySession();
